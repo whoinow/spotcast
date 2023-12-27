@@ -159,7 +159,7 @@ def get_search_results(search:str, spotify_client:spotipy.Spotify, artistName:st
                 search,
                 limit,
                 offset=0,
-                type=searchType",
+                type=searchType,
                 market=country)[resultKey]['items']
         except IndexError:
             pass
