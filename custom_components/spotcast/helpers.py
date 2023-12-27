@@ -152,7 +152,7 @@ def get_search_results(search:str, spotify_client:spotipy.Spotify, artistName:st
         if searchType == "tracks" and not is_empty_str(artistName):
             search = get_search_string(search, artistName)
         
-        resultKey = "playlists" if searchType == "playlist" else "track"
+        resultKey = "playlists" if searchType == "playlist" else "tracks"
 
         try:
             searchResults = spotify_client.search(
