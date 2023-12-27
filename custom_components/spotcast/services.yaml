@@ -69,6 +69,15 @@ start:
       required: false
       selector:
         text:
+    searchType:
+      name: "Search Type"
+      description: "This is the type of search."
+      default: "track"
+      selector:
+        select:
+          options:
+            - "track"
+            - "playlist"
     account:
       name: "Account"
       description: "Optionally starts Spotify using an alternative account specified in config."

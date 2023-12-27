@@ -140,7 +140,7 @@ def get_search_string(search:str, artistName:str) -> str:
         finalString += " artist:" + artistName
     return finalString
 
-def get_search_results(search:str, spotify_client:spotipy.Spotify, artistName:str=None, limit:int=10, country:str=None):
+def get_search_results(search:str, spotify_client:spotipy.Spotify, artistName:str=None, limit:int=10, searchType:str=None, country:str=None):
     _LOGGER.debug("using search query to find uri")
     searchResults = []
 
@@ -149,8 +149,9 @@ def get_search_results(search:str, spotify_client:spotipy.Spotify, artistName:st
         _LOGGER.debug("Playing top tracks for artist: %s", searchResults[0]['name'])
     else:
         # Get search type
-        search = get_search_string(search, artistName)
-        searchType = "track"
+        if searchType == "track" and not is_empty_str(artistName):
+            search = get_search_string(search, artistName)
+        
         try:
             searchResults = spotify_client.search(
                 search,
@@ -166,8 +167,8 @@ def get_search_results(search:str, spotify_client:spotipy.Spotify, artistName:st
 
 def search_tracks(search:str, spotify_client:spotipy.Spotify,
                             appendToQueue:bool=False, shuffle:bool=False, startRandom:bool=False,
-                            limit:int=20, artistName:str=None, country:str=None):
-    results = get_search_results(search, spotify_client, artistName, limit, country)
+                            limit:int=20, artistName:str=None, searchType:str=None, country:str=None):
+    results = get_search_results(search, spotify_client, artistName, limit, searchType, country)
     if len(results) > 0:
         firstResult = [results[0]]
         if not startRandom:

@@ -28,6 +28,7 @@ from .const import (
     CONF_SPOTIFY_URI,
     CONF_SPOTIFY_SEARCH,
     CONF_SPOTIFY_ARTISTNAME,
+    CONF_SPOTIFY_TYPE,
     CONF_SPOTIFY_CATEGORY,
     CONF_SPOTIFY_COUNTRY,
     CONF_SPOTIFY_LIMIT,
@@ -182,6 +183,7 @@ def setup(hass: ha_core.HomeAssistant, config: collections.OrderedDict) -> bool:
         limit = call.data.get(CONF_SPOTIFY_LIMIT)
         search = call.data.get(CONF_SPOTIFY_SEARCH)
         artistName = call.data.get(CONF_SPOTIFY_ARTISTNAME)
+        searchType = call.data.get(CONF_SPOTIFY_SEARCHTYPE)
         random_song = call.data.get(CONF_RANDOM, False)
         repeat = call.data.get(CONF_REPEAT, False)
         shuffle = call.data.get(CONF_SHUFFLE, False)
@@ -255,7 +257,9 @@ def setup(hass: ha_core.HomeAssistant, config: collections.OrderedDict) -> bool:
             if is_empty_str(uri):
                 # get uri from search request
                 #uri = get_search_results(search, client, country)
-                searchResults = search_tracks(search, client, False, shuffle, random_song, limit, artistName, country)
+                if is_empty_str(searchType):
+                    searchType = "track"
+                searchResults = search_tracks(search, client, False, shuffle, random_song, limit, artistName, searchType, country)
                 # play the first track
                 if len(searchResults) > 0:
                     uri = searchResults[0]['uri']
