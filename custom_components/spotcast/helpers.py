@@ -149,19 +149,33 @@ def get_search_results(search:str, spotify_client:spotipy.Spotify, artistName:st
         _LOGGER.debug("Playing top tracks for artist: %s", searchResults[0]['name'])
     else:
         # Get search type
-        if searchType == "track" and not is_empty_str(artistName):
+        if searchType == "tracks" and not is_empty_str(artistName):
             search = get_search_string(search, artistName)
         
+        resultKey = "playlists" if searchType == "playlist" else "track"
+
         try:
             searchResults = spotify_client.search(
                 search,
                 limit,
                 offset=0,
-                type=searchType,
-                market=country)["tracks"]['items']
+                type=searchType",
+                market=country)[resultKey]['items']
         except IndexError:
             pass
-        _LOGGER.debug("Found %d results for %s. First Track name: %s", len(searchResults), search, searchResults[0]['name'])
+        
+        if searchType == "playlist":    
+            tempResults = searchResults
+            searchResults = []
+            for result in tempResults:
+                if result["name"].lower() == search.lower() or result["name"].lower() in search.lower():
+                    searchResults = [
+                        result
+                    ]
+                    break
+        
+        if len(searchResults) > 0:
+            _LOGGER.debug("Found %d results for %s. First item name: %s", len(searchResults), search, searchResults[0]['name'])
 
     return searchResults
 
