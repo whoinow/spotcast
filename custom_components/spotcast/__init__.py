@@ -49,6 +49,7 @@ from .const import (
 )
 
 from .helpers import (
+    add_tracks_to_queue,
     async_wrap,
     get_cast_devices,
     get_spotify_devices,
