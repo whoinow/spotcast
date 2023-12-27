@@ -1,0 +1,61 @@
+intent_script:
+    # Spotify
+        Spotify:
+            speech: 
+              text: "No problem, playing {{media_search}} by {{artist}} on {{media_player}}."
+            action:
+              service: spotcast.start
+              data:
+                entity_id: "{{media_player}}"
+                search: "{{media_search}}"
+                artistName: "{{artist}}"
+                shuffle: true
+        SpotifyAny:
+            speech:
+              text: "No problem, playing songs matching {{media_search}} on {{media_player}}"
+            action:
+              service: spotcast.start
+              data:
+                entity_id: "{{media_player}}"
+                search: "{{media_search}}"
+                shuffle: true
+        SpotifyPlaylist:
+            speech: 
+              text: "No problem, playing playlist {{media_search}} on {{media_player}}."
+            action:
+              service: spotcast.start
+              data:
+                entity_id: "{{media_player}}"
+                search: "{{media_search}}"
+                searchType: "playlist"
+                shuffle: true
+        
+        # Media
+        SetVolume:
+            speech:
+              text: "OK, setting {{media_player}} to {{volume}} percent."
+            action:
+              service: "media_player.volume_set"
+              data:
+                entity_id: "{{ media_player }}"
+                volume_level: "{{ volume / 100.0 }}"
+        
+        StopMedia:
+            speech:
+              text: "OK, stopping the music"
+            action:
+              service: "media_player.media_pause"
+              data:
+                entity_id: "{{ media_player }}"
+            
+        PlayMedia:
+            speech:
+              text: "OK, resuming music on {{ state_attr(media_player, 'friendly_name') }}"
+            action:
+              service: "media_player.media_play"
+              data:
+                entity_id: "{{ media_player }}"
+              
+        NextTrack:
+            action:
+              service: media_player.media_next_track

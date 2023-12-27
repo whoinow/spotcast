@@ -1,0 +1,60 @@
+# Example config/custom_sentences/en/media.yaml
+language: "en"
+intents:
+  Spotify:
+    data:
+      - sentences:
+        - "Play {media_search} by {artist} on {media_player}"
+  SpotifyAny:
+    data:
+      - sentences:
+        - "Play {media_search} on {media_player}"
+  SpotifyPlaylist:
+    data:
+      - sentences:
+        - "Play playlist {media_search} on {media_player}"
+  SetVolume:
+    data:
+      - sentences:
+          - "(set|change) {media_player} volume to {volume} [%|percent]"
+          - "(set|change) [the] volume for {media_player} to {volume} [%|percent]"
+          - "(set|change) {media_player} to {volume} [%|percent]"
+  StopMedia:
+    data:
+      - sentences:
+          - "(Stop|Pause) the (music|song|playlist) on {media_player}"
+  PlayMedia:
+    data:
+      - sentences:
+          - "(Play|resume) [the] (music|song|playlist) [on] {media_player}"
+  NextTrack:
+    data:
+      - sentences:
+          - "[Play the] (next|skip) track"
+lists:
+  media_search:
+    wildcard: true
+  artist:
+    wildcard: true
+  media_player:
+    values:
+      - in: "(bedroom speaker)"
+        out: "media_player.nestaudio9026"
+      - in: "(hallway speaker)"
+        out: "media_player.chromecastaudio2794"
+      - in: "(chris office speaker)"
+        out: "media_player.chris_office_speaker"
+      - in: "(living room speaker)"
+        out: "media_player.living_room_speaker"
+      - in: "(kitchen display)"
+        out: "media_player.kitchen_display"
+      - in: "(garage speaker)"
+        out: "media_player.garage_speaker"
+      - in: "(speaker group)"
+        out: "media_player.speaker_group"
+      - in: "(bedroom tv|bedroom TV)"
+        out: "media_player.bedroom_tv"
+  volume:
+    range:
+      from: 0
+      to: 100
