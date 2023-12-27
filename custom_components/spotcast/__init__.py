@@ -56,6 +56,7 @@ from .helpers import (
     is_empty_str,
     get_random_playlist_from_category,
     get_search_results,
+    search_tracks,
     is_valid_uri,
 )
 
